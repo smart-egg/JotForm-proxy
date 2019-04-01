@@ -17,7 +17,10 @@ module.exports = async function (context, req) {
         .catch(error => {
             context.res = {
                 status: 400,
-                body: error
+                body: {
+                    status: 'error',
+                    message: error
+                }
             }
             context.done();
         })

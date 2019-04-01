@@ -17,18 +17,6 @@ module.exports.makeJotFormAPIRequest = function (formId, context) {
             }
         });
     });
-
-    // return new Promise((resolve, reject) => {
-    //     const fs = require('fs');
-    //     var content;
-    //     // First I want to read the file
-    //     fs.readFile(__dirname + '/sampleres.json', function read(err, data) {
-    //         if (err) {
-    //             reject(err);
-    //         }
-    //         resolve(JSON.parse(data));
-    //     });
-    // })
 };
 
 module.exports.filterObjects = (data, filterPropValue) => {
