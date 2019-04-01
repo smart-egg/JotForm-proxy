@@ -11,7 +11,7 @@ $credential = New-Object -TypeName System.Management.Automation.PSCredential -Ar
 Connect-AzAccount -ServicePrincipal -Credential $credential -TenantId $tenantId
 
 
-Register resource providers
+# Register resource providers
 @('Microsoft.Web', 'Microsoft.Storage') | ForEach-Object {
     Register-AzResourceProvider -ProviderNamespace $_
 }
