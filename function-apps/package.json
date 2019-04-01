@@ -1,0 +1,21 @@
+{
+  "name": "jf-question-id",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pack": "gulp pack"
+  },
+  "keywords": [],
+  "author": "Ashish Gaude <ashish.gaude4@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "request": "2.88.0"
+  },
+  "devDependencies": {
+    "gulp": "3.9.1",
+    "gulp-clean": "0.4.0",
+    "gulp-zip": "4.1.0"
+  }
+}
