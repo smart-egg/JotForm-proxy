@@ -37,7 +37,7 @@ module.exports.filterObjects = (data, formID, filterPropValue) => {
                     break;
                 }
             }
-            response = formResponse("success", "");
+            response = questionId ? formResponse("success", "") : formResponse("success", `${filterPropValue} consentQuestionName not found`);
             response.formID = formID;
             response.consentQuestionID = questionId;
             break;
