@@ -42,6 +42,7 @@ module.exports.filterObjects = (data, formID, filterPropValue) => {
             response.consentQuestionID = questionId;
             break;
         case 401:
+        case 404:
             response = formResponse("error", "Accepted parameters: formID and consentQuestionName");
             break;
         default:
