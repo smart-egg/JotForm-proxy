@@ -20,11 +20,12 @@ module.exports.makeJotFormAPIRequest = function (formId, context) {
 };
 
 module.exports.filterObjects = (data, filterPropValue) => {
-    let questionIds = [];
+    let questionId = null;
     for (let item in data) {
         if (data.hasOwnProperty(item) && data[item]['cfname'] == filterPropValue) {
-            questionIds.push(item);
+            questionId = item;
+            break;
         }
     }
-    return questionIds;
+    return questionId;
 }
