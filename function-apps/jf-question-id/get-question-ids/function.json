@@ -14,9 +14,5 @@
    "direction": "out",
    "name": "res"
   }
- ],
- "_originalEntryPoint": false,
- "_originalScriptFile": "index.js",
- "scriptFile": "../.funcpack/index.js",
- "entryPoint": "get$dashquestion-ids"
+ ]
 }

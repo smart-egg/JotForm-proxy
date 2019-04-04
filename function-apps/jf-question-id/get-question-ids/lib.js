@@ -1,5 +1,12 @@
 const request = require('request');
 
+function formResponse(status, message) {
+    return {
+        status: status,
+        message: message
+    }
+}
+
 module.exports.makeJotFormAPIRequest = function (formId, context) {
     let options = {
         url: `http://eu-api.jotform.com/form/${formId}/questions?apiKey=${process.env.JOT_FORM_API_KEY}`,
@@ -12,19 +19,35 @@ module.exports.makeJotFormAPIRequest = function (formId, context) {
                 reject(error);
             }
             if (body) {
-                body = JSON.parse(body)
-                resolve(body.content);
+                resolve(JSON.parse(body));
             }
         });
     });
 };
 
-module.exports.filterObjects = (data, filterPropValue) => {
-    let questionIds = [];
-    for (let item in data) {
-        if (data.hasOwnProperty(item) && data[item]['cfname'] == filterPropValue) {
-            questionIds.push(item);
-        }
+module.exports.filterObjects = (data, formID, filterPropValue) => {
+    let response = {};
+    switch (data.responseCode) {
+        case 200:
+            let questionId = null;
+            let content = data.content;
+            for (let item in content) {
+                if (content.hasOwnProperty(item) && content[item]['cfname'] == filterPropValue) {
+                    questionId = item;
+                    break;
+                }
+            }
+            response = questionId ? formResponse("success", "") : formResponse("success", `${filterPropValue} consentQuestionName not found`);
+            response.formID = formID;
+            response.consentQuestionID = questionId;
+            break;
+        case 401:
+        case 404:
+            response = formResponse("error", "Accepted parameters: formID and consentQuestionName");
+            break;
+        default:
+            response = formResponse("error", data.message);
+            throw response;
     }
-    return questionIds;
+    return response;
 }
