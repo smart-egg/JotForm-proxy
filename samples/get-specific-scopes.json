@@ -17,30 +17,7 @@ response:
     ]
 }
 
-endpoint PUT put-specific-scopes:
-request:
-{
-    "formID" : "90824565381361",
-    "scopes" : [
-    { "id" : 1, "text" : "changed b) Invio di conferma e promemoria di appuntamenti, comunicazioni di servizio via SMS.modificata."},
-    { "id" : 3, "text" : "changed2 d) Finalità di marketing diretto, incluso attraverso campagne promozionali, analisi di mercato"}
-]
-}
-response:
-{
-    "status": "success",
-    "message": "",
-    "formID": "90824565381361",
-    "consentQuestionID": "8",
-    "scopes" : [
-        { "id" : 1, "text" : "changed b) Invio di conferma e promemoria di appuntamenti, comunicazioni di servizio via SMS.modificata."},
-        { "id" : 2, "text" : "c) Iscrizione al programma fedeltà utile a richiedere ed ottenere sconti e promozioni."},
-        { "id" : 3, "text" : "changed2 d) Finalità di marketing diretto, incluso attraverso campagne promozionali, analisi di mercato"},
-        { "id" : 4, "text" : "e) Cedere i dati a terzi per loro finalità commerciali"}       
-    ]
-}
-
-endpoint POST post-specific-scopes:
+endpoint POST (to create) post-specific-scopes:
 request:
 {
     "formID" : "90824565381361",
