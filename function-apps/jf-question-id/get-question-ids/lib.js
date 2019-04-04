@@ -43,7 +43,7 @@ module.exports.filterObjects = (data, formID, filterPropValue) => {
             break;
         case 401:
         case 404:
-            response = formResponse("error", "Accepted parameters: formID and consentQuestionName");
+            response = formResponse("error", "Accepted parameters: formID and consentQuestionName.");
             break;
         default:
             response = formResponse("error", data.message);
