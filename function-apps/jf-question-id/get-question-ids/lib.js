@@ -39,12 +39,12 @@ module.exports.filterObjects = (data, formID, filterPropValue) => {
             }
             response = questionId ? formResponse("success", "") : formResponse("success", `${filterPropValue} consentQuestionName not found`);
             response.formID = formID;
-            response.consentQuestionID = questionId;
+            response.consentQuestionID = parseInt(questionId);
             break;
         case 401:
         case 404:
             response = formResponse("error", "Accepted parameters: formID and consentQuestionName.");
-            break;
+            throw response
         default:
             response = formResponse("error", data.message);
             throw response;
