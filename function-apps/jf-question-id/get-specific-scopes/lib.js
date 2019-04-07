@@ -28,9 +28,9 @@ module.exports.getQuestionIds = (queryObj, xFunctionsKey, context) => {
             } else if (body) {
                 body = JSON.parse(body);
                 let questionId = body.consentQuestionID;
-                questionId ? resolve(questionId) : body.message ? reject(body.message) : "Unknown Error"
+                questionId ? resolve(questionId) : body.message ? reject(formResponse("error", body.message)) : formResponse("error", "Unknown Error");
             } else {
-                reject("Unknown Error")
+                reject(formResponse("error", "Unknown Error"))
             }
         });
     });

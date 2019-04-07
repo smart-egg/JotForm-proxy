@@ -32,12 +32,12 @@ module.exports.filterObjects = (data, formID, filterPropValue) => {
             let questionId = null;
             let content = data.content;
             for (let item in content) {
-                if (content.hasOwnProperty(item) && content[item]['cfname'] == filterPropValue) {
+                if (content.hasOwnProperty(item) && content[item].hasOwnProperty('cfname') && content[item]['cfname'] == filterPropValue) {
                     questionId = item;
                     break;
                 }
             }
-            response = questionId ? formResponse("success", "") : formResponse("success", `${filterPropValue} consentQuestionName not found`);
+            response = questionId ? formResponse("success", "") : formResponse("success", `consentQuestionName "${filterPropValue}" not found`);
             response.formID = formID;
             response.consentQuestionID = parseInt(questionId);
             break;
