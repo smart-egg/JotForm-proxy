@@ -1,11 +1,29 @@
 const request = require('request');
 
-function formResponse(status, message) {
+const ACCEPTED_PARAMETERS = ['consentQuestionName', 'formID'];
+
+function formResponse(statusCode, responseBody) {
     return {
-        status: status,
-        message: message
+        status: statusCode,
+        body: responseBody
     }
 }
+
+module.exports.verifyInputs = (queryObj) => {
+    let resp = null;
+    return new Promise((resolve, reject) => {
+        for (index in ACCEPTED_PARAMETERS) {
+            if (!queryObj.hasOwnProperty(ACCEPTED_PARAMETERS[index])) {
+                resp = {
+                    status: "error",
+                    message: `Accepted parameters are: ${ACCEPTED_PARAMETERS.join()}`
+                }
+                reject(formResponse(400, resp));
+            }
+        }
+        resolve();
+    })
+};
 
 module.exports.getQuestionIds = (queryObj, xFunctionsKey, context) => {
     let queryStringObj = {
@@ -28,9 +46,9 @@ module.exports.getQuestionIds = (queryObj, xFunctionsKey, context) => {
             } else if (body) {
                 body = JSON.parse(body);
                 let questionId = body.consentQuestionID;
-                questionId ? resolve(questionId) : body.message ? reject(formResponse("error", body.message)) : formResponse("error", "Unknown Error");
+                questionId ? resolve(questionId) : body.message ? reject(formResponse(400, { status: "error", message: body.message })) : reject(formResponse(400, { status: "error", message: "Unknown Error" }));
             } else {
-                reject(formResponse("error", "Unknown Error"))
+                reject(formResponse(400, { status: "error", message: "Unknown Error" }))
             }
         });
     });
@@ -56,8 +74,8 @@ module.exports.getSpecificScopes = (queryObj) => {
 };
 
 module.exports.filterObjects = (rawResponse, queryObj) => {
-
     let response = null;
+    let resp = null;
 
     switch (rawResponse.responseCode) {
         case 200:
@@ -65,17 +83,35 @@ module.exports.filterObjects = (rawResponse, queryObj) => {
             let options = items.split("\n");
             let result = options.map((it, i) => { return { id: i + 1, text: it } });
 
-            response = formResponse("success", "");
-            response.formID = queryObj.formID;
-            response.consentQuestionID = queryObj.questionId;
-            response.scopes = result;
+            resp = {
+                status: "success",
+                message: ``,
+                formID: queryObj.formID,
+                consentQuestionID: queryObj.questionId,
+                scopes: result
+            }
+            response = formResponse(200, resp);
             break;
         case 401:
+            resp = {
+                status: "error",
+                message: `Accepted parameters: formID and consentQuestionName.`
+            };
+            response = formResponse(400, resp);
+            throw response
         case 404:
-            response = formResponse("error", "Accepted parameters: formID and consentQuestionName.");
+            resp = {
+                status: "error",
+                message: `Requested URL is not available.`
+            };
+            response = formResponse(400, resp);
             throw response
         default:
-            response = formResponse("error", rawResponse.message);
+            resp = {
+                status: "error",
+                message: rawResponse.message
+            }
+            response = formResponse(400, resp);
             throw response;
     }
 
