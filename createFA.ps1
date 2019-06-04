@@ -3,15 +3,18 @@ $resourceGroupName = "app-consento-$env"
 $location = "West Europe"
 $storageAccountName = "jfquestionid$env".ToLower()
 $storageSku = "Standard_LRS"
-$jotFormAPIKey = "951f4daf43eeeea54b1f980f0d0a7418"
-$subscriptionId = "fbf7151d-47ed-4d80-a63b-54bfed36920e"
+$jotFormAPIKey = ""
+$subscriptionId = ""
 $faFolder = "jf-question-id"
 
 # LOGIN CREDENTIALS
-$tenantId = "03a96ac9-6b14-46ef-9250-2b988e9ca025"
-$applicationId = "82051a7b-841c-4747-912d-383ffcb3d3f8";
-$securePassword = "N&~G'LV'Ug<K" | ConvertTo-SecureString -AsPlainText -Force
+
+# INSERT CREDENTIALS HERE
+$tenantId = ""
+$applicationId = "";
+$securePassword = "" | ConvertTo-SecureString -AsPlainText -Force
 $credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $applicationId, $securePassword
+# 
 
 # Login to Azure
 Connect-AzAccount -ServicePrincipal -Credential $credential -TenantId $tenantId
