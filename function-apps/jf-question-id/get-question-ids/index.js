@@ -1,26 +1,18 @@
 const lib = require('./lib');
 
 module.exports = async function (context, req) {
-    return lib.makeJotFormAPIRequest(req.query.formId, context)
+    return lib.makeJotFormAPIRequest(req.query.formID, context)
         .then(rawResponse => {
-            let questionIds = lib.filterObjects(rawResponse, req.query.consentQuestionName);
+            let response = lib.filterObjects(rawResponse, req.query.formID, req.query.consentQuestionName);
             context.res = {
-                body: {
-                    status: 'success',
-                    message: '',
-                    formID: req.query.formId,
-                    consentQuestionID: questionIds
-                }
+                body: response
             }
             context.done();
         })
         .catch(error => {
             context.res = {
                 status: 400,
-                body: {
-                    status: 'error',
-                    message: error
-                }
+                body: error
             }
             context.done();
         })
